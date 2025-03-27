@@ -6,7 +6,7 @@
 //go:build su
 // +build su
 
-package service_test
+package kardianos_test
 
 import (
 	"flag"
@@ -19,7 +19,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kardianos/service"
+	"github.com/lucasdecamargo/kardianos"
 )
 
 const runAsServiceArg = "RunThisAsService"
@@ -76,10 +76,10 @@ func TestInstallRunRestartStopRemove(t *testing.T) {
 
 func runService() {
 	p := &program{}
-	sc := &service.Config{
+	sc := &kardianos.Config{
 		Name: "go_service_test",
 	}
-	s, err := service.New(p, sc)
+	s, err := kardianos.New(p, sc)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -168,12 +168,12 @@ func mustNewRunAsService(
 	t *testing.T,
 	p *program,
 	reportDir string,
-) service.Service {
-	sc := &service.Config{
+) kardianos.Service {
+	sc := &kardianos.Config{
 		Name:      "go_service_test",
 		Arguments: []string{"-test.v=true", "-su.runAsService", "-su.reportDir", reportDir},
 	}
-	s, err := service.New(p, sc)
+	s, err := kardianos.New(p, sc)
 	if err != nil {
 		t.Fatal(err)
 	}

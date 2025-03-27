@@ -1,3 +1,3 @@
 FROM minimum2scp/systemd:latest
-ADD service.test /tmp/
-CMD /tmp/service.test -test.v=true
+ADD kardianos.test /tmp/
+CMD /tmp/kardianos.test -test.v=true

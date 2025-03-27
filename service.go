@@ -2,7 +2,7 @@
 // Use of this source code is governed by a zlib-style
 // license that can be found in the LICENSE file.
 
-// Package service provides a simple way to create a system service.
+// Package service provides a simple way to create a system kardianos.
 // Currently supports Windows, Linux/(systemd | Upstart | SysV | OpenRC), and OSX/Launchd.
 //
 // Windows controls services by setting up callbacks that is non-trivial. This
@@ -18,14 +18,14 @@
 //	import (
 //		"log"
 //
-//		"github.com/kardianos/service"
+//		"github.com/lucasdecamargo/kardianos"
 //	)
 //
-//	var logger service.Logger
+//	var logger kardianos.Logger
 //
 //	type program struct{}
 //
-//	func (p *program) Start(s service.Service) error {
+//	func (p *program) Start(s kardianos.Service) error {
 //		// Start should not block. Do the actual work async.
 //		go p.run()
 //		return nil
@@ -33,20 +33,20 @@
 //	func (p *program) run() {
 //		// Do work here
 //	}
-//	func (p *program) Stop(s service.Service) error {
+//	func (p *program) Stop(s kardianos.Service) error {
 //		// Stop should not block. Return with a few seconds.
 //		return nil
 //	}
 //
 //	func main() {
-//		svcConfig := &service.Config{
+//		svcConfig := &kardianos.Config{
 //			Name:        "GoServiceTest",
 //			DisplayName: "Go Service Test",
-//			Description: "This is a test Go service.",
+//			Description: "This is a test Go kardianos.",
 //		}
 //
 //		prg := &program{}
-//		s, err := service.New(prg, svcConfig)
+//		s, err := kardianos.New(prg, svcConfig)
 //		if err != nil {
 //			log.Fatal(err)
 //		}
@@ -59,7 +59,7 @@
 //			logger.Error(err)
 //		}
 //	}
-package service // import "github.com/kardianos/service"
+package kardianos // import "github.com/lucasdecamargo/kardianos"
 
 import (
 	"errors"
@@ -111,13 +111,13 @@ const (
 
 // Config provides the setup for a Service. The Name field is required.
 type Config struct {
-	Name        string   // Required name of the service. No spaces suggested.
+	Name        string   // Required name of the kardianos. No spaces suggested.
 	DisplayName string   // Display name, spaces allowed.
-	Description string   // Long description of service.
+	Description string   // Long description of kardianos.
 	UserName    string   // Run as username.
 	Arguments   []string // Run with arguments.
 
-	// Optional field to specify the executable for service.
+	// Optional field to specify the executable for kardianos.
 	// If empty the current executable is used.
 	Executable string
 
@@ -184,7 +184,7 @@ func New(i Interface, c *Config) (Service, error) {
 //
 //   - POSIX
 //
-//   - UserService   bool   (false)            - Install as a current user service.
+//   - UserService   bool   (false)            - Install as a current user kardianos.
 //
 //   - SystemdScript string ()                 - Use custom systemd script.
 //
@@ -288,7 +288,7 @@ func (kv KeyValue) funcSingle(name string, defaultValue func()) func() {
 	return defaultValue
 }
 
-// Platform returns a description of the system service.
+// Platform returns a description of the system kardianos.
 func Platform() string {
 	if system == nil {
 		return ""
@@ -329,7 +329,7 @@ func ChosenSystem() System {
 }
 
 // AvailableSystems returns the list of system services considered
-// when choosing the system service.
+// when choosing the system kardianos.
 func AvailableSystems() []System {
 	return systemRegistry
 }
@@ -364,7 +364,7 @@ type System interface {
 //  8. Service.Run returns.
 //  9. User program should quickly exit.
 type Interface interface {
-	// Start provides a place to initiate the service. The service doesn't
+	// Start provides a place to initiate the kardianos. The service doesn't
 	// signal a completed start until after this function returns, so the
 	// Start function must not take more then a few seconds at most.
 	Start(s Service) error
@@ -381,7 +381,7 @@ type Shutdowner interface {
 	Interface
 	// Shutdown provides a place to clean up program execution when the system is being shutdown.
 	// It is essentially the same as Stop but for the case where machine is being shutdown/restarted
-	// instead of just normally stopping the service. Stop won't be called when Shutdown is.
+	// instead of just normally stopping the kardianos. Stop won't be called when Shutdown is.
 	Shutdown(s Service) error
 }
 
@@ -421,12 +421,12 @@ type Service interface {
 	// will be sent on errs as well as returned from Logger's functions.
 	SystemLogger(errs chan<- error) (Logger, error)
 
-	// String displays the name of the service. The display name if present,
+	// String displays the name of the kardianos. The display name if present,
 	// otherwise the name.
 	String() string
 
-	// Platform displays the name of the system that manages the service.
-	// In most cases this will be the same as service.Platform().
+	// Platform displays the name of the system that manages the kardianos.
+	// In most cases this will be the same as kardianos.Platform().
 	Platform() string
 
 	// Status returns the current service status.

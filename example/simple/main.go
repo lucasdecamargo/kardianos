@@ -2,20 +2,20 @@
 // Use of this source code is governed by a zlib-style
 // license that can be found in the LICENSE file.
 
-// simple does nothing except block while running the service.
+// simple does nothing except block while running the kardianos.
 package main
 
 import (
 	"log"
 
-	"github.com/kardianos/service"
+	"github.com/lucasdecamargo/kardianos"
 )
 
-var logger service.Logger
+var logger kardianos.Logger
 
 type program struct{}
 
-func (p *program) Start(s service.Service) error {
+func (p *program) Start(s kardianos.Service) error {
 	// Start should not block. Do the actual work async.
 	go p.run()
 	return nil
@@ -23,20 +23,20 @@ func (p *program) Start(s service.Service) error {
 func (p *program) run() {
 	// Do work here
 }
-func (p *program) Stop(s service.Service) error {
+func (p *program) Stop(s kardianos.Service) error {
 	// Stop should not block. Return with a few seconds.
 	return nil
 }
 
 func main() {
-	svcConfig := &service.Config{
+	svcConfig := &kardianos.Config{
 		Name:        "GoServiceExampleSimple",
 		DisplayName: "Go Service Example",
-		Description: "This is an example Go service.",
+		Description: "This is an example Go kardianos.",
 	}
 
 	prg := &program{}
-	s, err := service.New(prg, svcConfig)
+	s, err := kardianos.New(prg, svcConfig)
 	if err != nil {
 		log.Fatal(err)
 	}

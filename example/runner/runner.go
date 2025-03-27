@@ -14,7 +14,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/kardianos/service"
+	"github.com/lucasdecamargo/kardianos"
 )
 
 // Config is the runner app config structure.
@@ -29,18 +29,18 @@ type Config struct {
 	Stderr, Stdout string
 }
 
-var logger service.Logger
+var logger kardianos.Logger
 
 type program struct {
 	exit    chan struct{}
-	service service.Service
+	service kardianos.Service
 
 	*Config
 
 	cmd *exec.Cmd
 }
 
-func (p *program) Start(s service.Service) error {
+func (p *program) Start(s kardianos.Service) error {
 	// Look for exec.
 	// Verify home directory.
 	fullExec, err := exec.LookPath(p.Exec)
@@ -58,7 +58,7 @@ func (p *program) Start(s service.Service) error {
 func (p *program) run() {
 	logger.Info("Starting ", p.DisplayName)
 	defer func() {
-		if service.Interactive() {
+		if kardianos.Interactive() {
 			p.Stop(p.service)
 		} else {
 			p.service.Stop()
@@ -91,13 +91,13 @@ func (p *program) run() {
 
 	return
 }
-func (p *program) Stop(s service.Service) error {
+func (p *program) Stop(s kardianos.Service) error {
 	close(p.exit)
 	logger.Info("Stopping ", p.DisplayName)
 	if p.cmd.Process != nil {
 		p.cmd.Process.Kill()
 	}
-	if service.Interactive() {
+	if kardianos.Interactive() {
 		os.Exit(0)
 	}
 	return nil
@@ -134,7 +134,7 @@ func getConfig(path string) (*Config, error) {
 }
 
 func main() {
-	svcFlag := flag.String("service", "", "Control the system service.")
+	svcFlag := flag.String("service", "", "Control the system kardianos.")
 	flag.Parse()
 
 	configPath, err := getConfigPath()
@@ -146,7 +146,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	svcConfig := &service.Config{
+	svcConfig := &kardianos.Config{
 		Name:        config.Name,
 		DisplayName: config.DisplayName,
 		Description: config.Description,
@@ -157,7 +157,7 @@ func main() {
 
 		Config: config,
 	}
-	s, err := service.New(prg, svcConfig)
+	s, err := kardianos.New(prg, svcConfig)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -179,9 +179,9 @@ func main() {
 	}()
 
 	if len(*svcFlag) != 0 {
-		err := service.Control(s, *svcFlag)
+		err := kardianos.Control(s, *svcFlag)
 		if err != nil {
-			log.Printf("Valid actions: %q\n", service.ControlAction)
+			log.Printf("Valid actions: %q\n", kardianos.ControlAction)
 			log.Fatal(err)
 		}
 		return

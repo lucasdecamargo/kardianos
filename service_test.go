@@ -2,22 +2,22 @@
 // Use of this source code is governed by a zlib-style
 // license that can be found in the LICENSE file.
 
-package service_test
+package kardianos_test
 
 import (
 	"os"
 	"testing"
 	"time"
 
-	"github.com/kardianos/service"
+	"github.com/lucasdecamargo/kardianos"
 )
 
 func TestRunInterrupt(t *testing.T) {
 	p := &program{}
-	sc := &service.Config{
+	sc := &kardianos.Config{
 		Name: "go_service_test",
 	}
-	s, err := service.New(p, sc)
+	s, err := kardianos.New(p, sc)
 	if err != nil {
 		t.Fatalf("New err: %s", err)
 	}
@@ -49,13 +49,13 @@ func TestUserRunInterrupt(t *testing.T) {
 		t.Skipf("env %q is not set to 1", testInstallEnv)
 	}
 	p := &program{}
-	options := make(service.KeyValue)
+	options := make(kardianos.KeyValue)
 	options["UserService"] = true
-	sc := &service.Config{
+	sc := &kardianos.Config{
 		Name:   "go_user_service_test",
 		Option: options,
 	}
-	s, err := service.New(p, sc)
+	s, err := kardianos.New(p, sc)
 	if err != nil {
 		t.Fatalf("New err: %s", err)
 	}
@@ -73,14 +73,14 @@ type program struct {
 	numStopped int
 }
 
-func (p *program) Start(s service.Service) error {
+func (p *program) Start(s kardianos.Service) error {
 	go p.run()
 	return nil
 }
 func (p *program) run() {
 	// Do work here
 }
-func (p *program) Stop(s service.Service) error {
+func (p *program) Stop(s kardianos.Service) error {
 	p.numStopped++
 	return nil
 }

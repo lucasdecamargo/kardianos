@@ -5,7 +5,7 @@
 //go:build !su
 // +build !su
 
-package service_test
+package kardianos_test
 
 import "testing"
 

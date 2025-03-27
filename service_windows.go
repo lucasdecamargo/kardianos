@@ -2,7 +2,7 @@
 // Use of this source code is governed by a zlib-style
 // license that can be found in the LICENSE file.
 
-package service
+package kardianos
 
 import (
 	"fmt"
@@ -497,7 +497,7 @@ func (ws *windowsService) Restart() error {
 }
 
 func (ws *windowsService) stopWait(s *mgr.Service) error {
-	// First stop the service. Then wait for the service to
+	// First stop the kardianos. Then wait for the service to
 	// actually stop before starting it.
 	status, err := s.Control(svc.Stop)
 	if err != nil {
@@ -524,7 +524,7 @@ func (ws *windowsService) stopWait(s *mgr.Service) error {
 	return nil
 }
 
-// getStopTimeout fetches the time before windows will kill the service.
+// getStopTimeout fetches the time before windows will kill the kardianos.
 func getStopTimeout() time.Duration {
 	// For default and paths see https://support.microsoft.com/en-us/kb/146092
 	defaultTimeout := time.Millisecond * 20000

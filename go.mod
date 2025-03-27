@@ -1,4 +1,4 @@
-module github.com/kardianos/service
+module github.com/lucasdecamargo/kardianos
 
 go 1.12
 

@@ -6,40 +6,40 @@ test:
 	@CGO_ENABLED=0 go test -installsuffix netgo -a -c ..
 
 clean:
-	-rm service.test
+	-rm kardianos.test
 
 sysv: test
 	@echo sysv
-	@cp service.test sysv/
-	@docker build -q --tag="service.test.sysv" sysv
-	@-docker run service.test.sysv
+	@cp kardianos.test sysv/
+	@docker build -q --tag="kardianos.test.sysv" sysv
+	@-docker run kardianos.test.sysv
 	@-docker rm $(shell docker ps -l -q)
-	@-docker rmi -f service.test.sysv
-	@-rm sysv/service.test
+	@-docker rmi -f kardianos.test.sysv
+	@-rm sysv/kardianos.test
 
 systemd: test
 	@echo systemd
-	@cp service.test systemd/
-	@docker build -q --tag="service.test.systemd" systemd
-	@-docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro service.test.systemd
+	@cp kardianos.test systemd/
+	@docker build -q --tag="kardianos.test.systemd" systemd
+	@-docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro kardianos.test.systemd
 	@-docker rm $(shell docker ps -l -q)
-	@-docker rmi -f service.test.systemd
-	@-rm systemd/service.test
+	@-docker rmi -f kardianos.test.systemd
+	@-rm systemd/kardianos.test
 
 upstart: test
 	@echo upstart
-	@cp service.test upstart/
-	@docker build -q --tag="service.test.upstart" upstart
-	@-docker run service.test.upstart
+	@cp kardianos.test upstart/
+	@docker build -q --tag="kardianos.test.upstart" upstart
+	@-docker run kardianos.test.upstart
 	@-docker rm $(shell docker ps -l -q)
-	@-docker rmi -f service.test.upstart
-	@-rm upstart/service.test
+	@-docker rmi -f kardianos.test.upstart
+	@-rm upstart/kardianos.test
 
 openrc: test
 	@echo openrc
-	@cp service.test openrc/
-	@docker build -q --tag="service.test.openrc" openrc
-	@-docker run service.test.openrc
+	@cp kardianos.test openrc/
+	@docker build -q --tag="kardianos.test.openrc" openrc
+	@-docker run kardianos.test.openrc
 	@-docker rm $(shell docker ps -l -q)
-	@-docker rmi -f service.test.openrc
-	@-rm openrc/service.test
+	@-docker rmi -f kardianos.test.openrc
+	@-rm openrc/kardianos.test
