@@ -71,6 +71,7 @@ const (
 	optionKeepAliveDefault     = true
 	optionRunAtLoad            = "RunAtLoad"
 	optionRunAtLoadDefault     = false
+	optionGroup                = "Group"
 	optionUserService          = "UserService"
 	optionUserServiceDefault   = false
 	optionSessionCreate        = "SessionCreate"
@@ -184,6 +185,8 @@ func New(i Interface, c *Config) (Service, error) {
 //   - Prefix        string ("application")    - Service FMRI prefix.
 //
 //   - POSIX
+//
+//   - Group		 string ()				   - Set the UNIX Group that the processes are executed as.
 //
 //   - UserService   bool   (false)            - Install as a current user service.
 //
