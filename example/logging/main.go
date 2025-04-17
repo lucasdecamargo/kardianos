@@ -57,10 +57,10 @@ func (p *program) Stop(s kardianos.Service) error {
 // Service setup.
 //
 //	Define service config.
-//	Create the kardianos.
+//	Create the service.
 //	Setup the logger.
 //	Handle service controls (optional).
-//	Run the kardianos.
+//	Run the service.
 func main() {
 	svcFlag := flag.String("service", "", "Control the system kardianos.")
 	flag.Parse()

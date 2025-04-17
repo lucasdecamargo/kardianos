@@ -42,7 +42,7 @@
 //		svcConfig := &kardianos.Config{
 //			Name:        "GoServiceTest",
 //			DisplayName: "Go Service Test",
-//			Description: "This is a test Go kardianos.",
+//			Description: "This is a test Go service.",
 //		}
 //
 //		prg := &program{}
@@ -112,13 +112,13 @@ const (
 
 // Config provides the setup for a Service. The Name field is required.
 type Config struct {
-	Name        string   // Required name of the kardianos. No spaces suggested.
+	Name        string   // Required name of the service. No spaces suggested.
 	DisplayName string   // Display name, spaces allowed.
-	Description string   // Long description of kardianos.
+	Description string   // Long description of service.
 	UserName    string   // Run as username.
 	Arguments   []string // Run with arguments.
 
-	// Optional field to specify the executable for kardianos.
+	// Optional field to specify the executable for service.
 	// If empty the current executable is used.
 	Executable string
 
@@ -185,7 +185,7 @@ func New(i Interface, c *Config) (Service, error) {
 //
 //   - POSIX
 //
-//   - UserService   bool   (false)            - Install as a current user kardianos.
+//   - UserService   bool   (false)            - Install as a current user service.
 //
 //   - SystemdScript string ()                 - Use custom systemd script.
 //
@@ -291,7 +291,7 @@ func (kv KeyValue) funcSingle(name string, defaultValue func()) func() {
 	return defaultValue
 }
 
-// Platform returns a description of the system kardianos.
+// Platform returns a description of the system service.
 func Platform() string {
 	if system == nil {
 		return ""
@@ -332,7 +332,7 @@ func ChosenSystem() System {
 }
 
 // AvailableSystems returns the list of system services considered
-// when choosing the system kardianos.
+// when choosing the system service.
 func AvailableSystems() []System {
 	return systemRegistry
 }
@@ -367,7 +367,7 @@ type System interface {
 //  8. Service.Run returns.
 //  9. User program should quickly exit.
 type Interface interface {
-	// Start provides a place to initiate the kardianos. The service doesn't
+	// Start provides a place to initiate the service. The service doesn't
 	// signal a completed start until after this function returns, so the
 	// Start function must not take more then a few seconds at most.
 	Start(s Service) error
@@ -384,7 +384,7 @@ type Shutdowner interface {
 	Interface
 	// Shutdown provides a place to clean up program execution when the system is being shutdown.
 	// It is essentially the same as Stop but for the case where machine is being shutdown/restarted
-	// instead of just normally stopping the kardianos. Stop won't be called when Shutdown is.
+	// instead of just normally stopping the service. Stop won't be called when Shutdown is.
 	Shutdown(s Service) error
 }
 
@@ -424,11 +424,11 @@ type Service interface {
 	// will be sent on errs as well as returned from Logger's functions.
 	SystemLogger(errs chan<- error) (Logger, error)
 
-	// String displays the name of the kardianos. The display name if present,
+	// String displays the name of the service. The display name if present,
 	// otherwise the name.
 	String() string
 
-	// Platform displays the name of the system that manages the kardianos.
+	// Platform displays the name of the system that manages the service.
 	// In most cases this will be the same as kardianos.Platform().
 	Platform() string
 

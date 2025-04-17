@@ -2,7 +2,7 @@
 // Use of this source code is governed by a zlib-style
 // license that can be found in the LICENSE file.
 
-// simple does nothing except block while running the kardianos.
+// simple does nothing except block while running the service.
 package main
 
 import (
@@ -32,7 +32,7 @@ func main() {
 	svcConfig := &kardianos.Config{
 		Name:        "GoServiceExampleSimple",
 		DisplayName: "Go Service Example",
-		Description: "This is an example Go kardianos.",
+		Description: "This is an example Go service.",
 	}
 
 	prg := &program{}

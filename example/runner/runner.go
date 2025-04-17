@@ -134,7 +134,7 @@ func getConfig(path string) (*Config, error) {
 }
 
 func main() {
-	svcFlag := flag.String("service", "", "Control the system kardianos.")
+	svcFlag := flag.String("service", "", "Control the system service.")
 	flag.Parse()
 
 	configPath, err := getConfigPath()
