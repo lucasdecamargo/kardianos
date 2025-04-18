@@ -159,7 +159,7 @@ func (s *darwinLaunchdService) Install() error {
 	}
 	_, err = os.Stat(confPath)
 	if err == nil {
-		return fmt.Errorf("Init already exists: %s", confPath)
+		return ErrServiceExists
 	}
 
 	if s.userService {

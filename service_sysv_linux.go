@@ -6,7 +6,6 @@ package kardianos
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"os/signal"
 	"strings"
@@ -69,7 +68,7 @@ func (s *sysv) Install() error {
 	}
 	_, err = os.Stat(confPath)
 	if err == nil {
-		return fmt.Errorf("Init already exists: %s", confPath)
+		return ErrServiceExists
 	}
 
 	f, err := os.Create(confPath)

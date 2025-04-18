@@ -7,7 +7,6 @@ package kardianos
 import (
 	"bytes"
 	"encoding/xml"
-	"fmt"
 	"os"
 	"os/signal"
 	"regexp"
@@ -114,7 +113,7 @@ func (s *solarisService) Install() error {
 	}
 	_, err = os.Stat(confPath)
 	if err == nil {
-		return fmt.Errorf("Manifest already exists: %s", confPath)
+		return ErrServiceExists
 	}
 
 	f, err := os.Create(confPath)

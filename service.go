@@ -155,6 +155,9 @@ var (
 	ErrNoServiceSystemDetected = errors.New("No service system detected.")
 	// ErrNotInstalled is returned when the service is not installed.
 	ErrNotInstalled = errors.New("the service is not installed")
+	// ErrServiceExists is returned when the service is already installed or
+	// there is a conflict with the service name.
+	ErrServiceExists = errors.New("the service is already installed or there is a conflict with the service name")
 )
 
 // New creates a new service based on a service interface and configuration.

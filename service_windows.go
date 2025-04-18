@@ -284,7 +284,7 @@ func (ws *windowsService) Install() error {
 	s, err := m.OpenService(ws.Name)
 	if err == nil {
 		s.Close()
-		return fmt.Errorf("service %s already exists", ws.Name)
+		return ErrServiceExists
 	}
 	var startType int32
 	switch ws.Option.string(StartType, ServiceStartAutomatic) {

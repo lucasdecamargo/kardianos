@@ -7,7 +7,6 @@ package kardianos
 import (
 	"bytes"
 	"errors"
-	"fmt"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -147,7 +146,7 @@ func (s *systemd) Install() error {
 	}
 	_, err = os.Stat(confPath)
 	if err == nil {
-		return fmt.Errorf("Init already exists: %s", confPath)
+		return ErrServiceExists
 	}
 
 	f, err := os.OpenFile(confPath, os.O_WRONLY|os.O_CREATE, 0644)
