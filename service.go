@@ -72,6 +72,7 @@ const (
 	optionRunAtLoad            = "RunAtLoad"
 	optionRunAtLoadDefault     = false
 	optionGroup                = "Group"
+	optionType                 = "Type"
 	optionUserService          = "UserService"
 	optionUserServiceDefault   = false
 	optionSessionCreate        = "SessionCreate"
@@ -189,6 +190,8 @@ func New(i Interface, c *Config) (Service, error) {
 //
 //   - POSIX
 //
+//   - Type          string ()                 - Service type. (simple | forking | oneshot | notify | dbus)
+//
 //   - Group		 string ()				   - Set the UNIX Group that the processes are executed as.
 //
 //   - UserService   bool   (false)            - Install as a current user service.
@@ -209,7 +212,7 @@ func New(i Interface, c *Config) (Service, error) {
 //
 //   - LogOutput     bool   (false)            - Redirect StdErr & StandardOutPath to files.
 //
-//   - Restart       string (always)           - How shall service be restarted.
+//   - Restart       string (always)           - How shall service be restarted. (always | on-success | on-failure | on-watchdog | on-abort)
 //
 //   - RestartSec    int (120)	               - How long to wait before restarting the service.
 //

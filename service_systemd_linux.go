@@ -164,6 +164,7 @@ func (s *systemd) Install() error {
 		*Config
 		Path                 string
 		Group                string
+		Type                 string
 		HasOutputFileSupport bool
 		ReloadSignal         string
 		PIDFile              string
@@ -177,6 +178,7 @@ func (s *systemd) Install() error {
 		s.Config,
 		path,
 		s.Option.string(optionGroup, ""),
+		s.Option.string(optionType, ""),
 		s.hasOutputFileSupport(),
 		s.Option.string(optionReloadSignal, ""),
 		s.Option.string(optionPIDFile, ""),
@@ -310,6 +312,7 @@ ConditionFileIsExecutable={{.Path|cmdEscape}}
 [Service]
 StartLimitInterval=5
 StartLimitBurst=10
+{{if .Type}}Type={{.Type}}{{end}}
 ExecStart={{.Path|cmdEscape}}{{range .Arguments}} {{.|cmd}}{{end}}
 {{if .ChRoot}}RootDirectory={{.ChRoot|cmd}}{{end}}
 {{if .WorkingDirectory}}WorkingDirectory={{.WorkingDirectory|cmdEscape}}{{end}}

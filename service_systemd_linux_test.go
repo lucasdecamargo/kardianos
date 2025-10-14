@@ -8,6 +8,7 @@ import (
 func TestSystemdCustomConfig(t *testing.T) {
 	options := make(KeyValue)
 	options["Group"] = "glue"
+	options["Type"] = "forking"
 	options["LogOutput"] = true
 	options["LogDirectory"] = "/var/log"
 	options["PIDFile"] = "/var/run/glue.pid"
@@ -39,6 +40,7 @@ func TestSystemdCustomConfig(t *testing.T) {
 		*Config
 		Path                 string
 		Group                string
+		Type                 string
 		HasOutputFileSupport bool
 		ReloadSignal         string
 		PIDFile              string
@@ -52,6 +54,7 @@ func TestSystemdCustomConfig(t *testing.T) {
 		s.Config,
 		"/usr/bin/myapp",
 		s.Option.string(optionGroup, ""),
+		s.Option.string(optionType, ""),
 		s.hasOutputFileSupport(),
 		s.Option.string(optionReloadSignal, ""),
 		s.Option.string(optionPIDFile, ""),
