@@ -165,6 +165,7 @@ func (s *systemd) Install() error {
 		Path                 string
 		Group                string
 		Type                 string
+		UMask                string
 		HasOutputFileSupport bool
 		ReloadSignal         string
 		PIDFile              string
@@ -179,6 +180,7 @@ func (s *systemd) Install() error {
 		path,
 		s.Option.string(optionGroup, ""),
 		s.Option.string(optionType, ""),
+		s.Option.string(optionUMask, ""),
 		s.hasOutputFileSupport(),
 		s.Option.string(optionReloadSignal, ""),
 		s.Option.string(optionPIDFile, ""),
@@ -318,6 +320,7 @@ ExecStart={{.Path|cmdEscape}}{{range .Arguments}} {{.|cmd}}{{end}}
 {{if .WorkingDirectory}}WorkingDirectory={{.WorkingDirectory|cmdEscape}}{{end}}
 {{if .UserName}}User={{.UserName}}{{end}}
 {{if .Group}}Group={{.Group}}{{end}}
+{{if .UMask}}UMask={{.UMask}}{{end}}
 {{if .ReloadSignal}}ExecReload=/bin/kill -{{.ReloadSignal}} "$MAINPID"{{end}}
 {{if .PIDFile}}PIDFile={{.PIDFile|cmd}}{{end}}
 {{if and .LogOutput .HasOutputFileSupport -}}

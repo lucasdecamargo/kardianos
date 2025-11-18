@@ -73,6 +73,7 @@ const (
 	optionRunAtLoadDefault     = false
 	optionGroup                = "Group"
 	optionType                 = "Type"
+	optionUMask                = "UMask"
 	optionUserService          = "UserService"
 	optionUserServiceDefault   = false
 	optionSessionCreate        = "SessionCreate"
@@ -193,6 +194,8 @@ func New(i Interface, c *Config) (Service, error) {
 //   - Type          string ()                 - Service type. (simple | forking | oneshot | notify | dbus)
 //
 //   - Group		 string ()				   - Set the UNIX Group that the processes are executed as.
+//
+//   - UMask         string ()                 - Set the UNIX umask for the service.
 //
 //   - UserService   bool   (false)            - Install as a current user service.
 //
